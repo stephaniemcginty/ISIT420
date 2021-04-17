@@ -15,10 +15,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     //add a pet to database
     document.getElementById("submit").addEventListener("click", function () {
-        var tTitle = document.getElementById("title").value;
-        var tDetail = document.getElementById("detail").value;
-        var tPriority = document.getElementById("priority").value;
-        var onePet = new Pet(tTitle, tDetail, tPriority);
+        var tId = document.getElementById("addID").value
+        var tName = document.getElementById("addName").value;
+        var tAge = document.getElementById("addAge").value;
+        var tBreed = document.getElementById("addBreed").value;
+        var tGender = document.getElementById("addGender").value;
+        var tStatus = document.getElementById("addStatus").value;
+        var onePet = new Pet(tId, tName, tAge, tBreed, tGender, tStatus);
 
         $.ajax({
             url: '/NewPet' ,
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             contentType: 'application/json',
             data: JSON.stringify(onePet),
             success: function (result) {
-                console.log("added new note")
+                console.log("added new pet")
             }
         });
     });
@@ -52,7 +55,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 var li = document.createElement('li');
                 ul.appendChild(li);
     
-                li.innerHTML=li.innerHTML + index + ": " + " Priority: " + item.priority + "  " + item.title + ":  " + item.detail + " Done? "+ item.completed;
+                li.innerHTML=li.innerHTML + index + ": " + " Name: " + item.name + 
+                " Age:  " + item.age + "Breed:  " + item.breed + "Gender: "+ item.gender +
+                " Adoption Status: " + item.status;
             }
         });
 
