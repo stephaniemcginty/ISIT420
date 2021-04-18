@@ -1,6 +1,7 @@
 //pet object
-function Pet(pId, pName, pAge, pBreed, pGender, pStatus) {
-    this.id = pId;
+function Pet(pName, pAge, pBreed, pGender, pStatus) {
+    //this.id = pId;
+    this.id = 0;
     this.name = pName;
     this.age = pAge;
     this.breed = pBreed;
@@ -15,14 +16,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     //add a pet to database
     document.getElementById("submit").addEventListener("click", function () {
-        var tId = document.getElementById("addID").value
+        //var tId = document.getElementById("addID").value
         var tName = document.getElementById("addName").value;
         var tAge = document.getElementById("addAge").value;
         var tBreed = document.getElementById("addBreed").value;
         var tGender = document.getElementById("addGender").value;
         var tStatus = document.getElementById("addStatus").value;
-        //var onePet = new Pet(tName, tAge, tBreed, tGender, tStatus);
-        var onePet = new Pet(tId, tName, tAge, tBreed, tGender, tStatus);
+        var onePet = new Pet(tName, tAge, tBreed, tGender, tStatus);
+        //var onePet = new Pet(pId, tName, tAge, tBreed, tGender, tStatus);
 
         $.ajax({
             url: '/NewPet' ,
@@ -55,8 +56,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             function ProcessOnePet(item, index) {
                 var li = document.createElement('li');
                 ul.appendChild(li);
-    
-                li.innerHTML=li.innerHTML + "ID: " + index + ", Name: " + item.name + "," + 
+                li.innerHTML=li.innerHTML + index + ", Name: " + item.name + "," + 
                 " Age:  " + item.age + ", Breed:  " + item.breed + ", Gender: "+ item.gender +
                 ", Adoption Status: " + item.status;
             }
@@ -73,15 +73,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
   
-
     //delete pet from database
     document.getElementById("delete").addEventListener("click", function () {
         
-        var whichPet = document.getElementById('deleteID').value;
+        var whichPet = document.getElementById('deleteName').value;
         var idToDelete = "";
         for(i=0; i< PetNotes.length; i++){
-            if(PetNotes[i].id === whichPet) {
-                idToDelete = PetNotes[i].id;
+            if(PetNotes[i].name === whichPet) {
+                idToDelete = PetNotes[i]._id;
            }
         }
         
@@ -104,56 +103,70 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 
-    // document.getElementById("completed").addEventListener("click", function () {
-        
-    //     var whichPet = document.getElementById('completedTitle').value;
-    //     var idToChange = "";
-    //     for(i=0; i< PetNotes.length; i++){
-    //         if(PetNotes[i].title === whichPet) {
-    //             idToChange = PetNotes[i]._id
-    //        }
-    //     }
-        
-    //     if(idToChange != "")
-    //     {
-    //         $.ajax({
-    //             url: 'CompletePet/',
-    //             type: 'PUT',
-    //             contentType: 'application/json',
-    //             data: JSON.stringify({id: idToChange}),
-    //                 success: function (response) {  
-    //                     console.log(response);  
-    //                 },  
-    //                 error: function () {  
-    //                     console.log('Error in Operation');  
-    //                 }  
-    //             });  
-            
-    //     }
-    //     else {
-    //         console.log("no matching Subject");
-    //     } 
-    // });
-    
-
-    //modify pet in the database
+    //find pet to modify in the database
     document.getElementById("find").addEventListener("click", function () {
-        var pId = document.getElementById("modID").value;
+        var pId = document.getElementById("modPet").value;
         var idToFind = "";
         for(i=0; i< PetNotes.length; i++){
-            if(PetNotes[i].id === pId) {
-                idToFind = PetNotes[i].id;
+            if(PetNotes[i].name === pId) {
+                idToFind = PetNotes[i]._id;
            }
         }
         console.log(idToFind);
 
         $.get("/FindPet/"+ idToFind, function(data, status){
-            console.log(data[0].id + " " + data[0].name);
+            //console.log(data[0].id + " " + data[0].name);
+            console.log(data[0].name);
             document.getElementById("modName").value = data[0].name;
             document.getElementById("modAge").value= data[0].age;
             document.getElementById("modBreed").value = data[0].breed;
             document.getElementById("modGender").value = data[0].gender;
             document.getElementById("modAdopted").value = data[0].status;
         });
+    });
+
+    //modify pet in the database
+    document.getElementById("modSubmit").addEventListener("click", function () {
+        var whichPet = document.getElementById('modPet').value;
+        var idToChange = "";
+
+        var eName = document.getElementById("modName").value;
+        var eAge = document.getElementById("modAge").value;
+        var eBreed = document.getElementById("modBreed").value;
+        var eGender = document.getElementById("modGender").value;
+        var eStatus = document.getElementById("modAdopted").value;
+
+        for(i=0; i< PetNotes.length; i++){
+            if(PetNotes[i].name === whichPet) {
+                idToChange = PetNotes[i]._id
+           }
+        }
+
+        if(idToChange != "")
+        {
+            $.ajax({
+                url: '/UpdatePet',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: idToChange,
+                    name: eName,
+                    age: eAge,
+                    breed: eBreed,
+                    gender: eGender,
+                    status: eStatus
+                }),
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Error in Operation');
+                }
+            });
+            
+        }
+        else {
+            console.log("no matching Subject");
+        } 
     });
 });
