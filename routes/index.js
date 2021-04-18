@@ -9,7 +9,7 @@ const Pets = require("../Pets");
 
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection
-const dbURI = "mongodb+srv://ma:oKk17C2DTKSIrg5A@makcluster.ghm34.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dbURI = "xxxxxxxx";
 //
 // 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
