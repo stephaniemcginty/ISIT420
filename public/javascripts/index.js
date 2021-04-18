@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var tBreed = document.getElementById("addBreed").value;
         var tGender = document.getElementById("addGender").value;
         var tStatus = document.getElementById("addStatus").value;
+        //var onePet = new Pet(tName, tAge, tBreed, tGender, tStatus);
         var onePet = new Pet(tId, tName, tAge, tBreed, tGender, tStatus);
 
         $.ajax({

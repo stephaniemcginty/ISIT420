@@ -17,11 +17,11 @@ const PetSchema = new Schema({
     required: true
   },
   age: {
-    type: Boolean,
+    type: String,
     required: true
   },
   breed: {
-    type: Number,
+    type: String,
     required: true
   },
 
