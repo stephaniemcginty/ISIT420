@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 var li = document.createElement('li');
                 ul.appendChild(li);
     
-                li.innerHTML=li.innerHTML + index + ": " + " Name: " + item.name + 
-                " Age:  " + item.age + "Breed:  " + item.breed + "Gender: "+ item.gender +
-                " Adoption Status: " + item.status;
+                li.innerHTML=li.innerHTML + "ID: " + index + ", Name: " + item.name + "," + 
+                " Age:  " + item.age + ", Breed:  " + item.breed + ", Gender: "+ item.gender +
+                ", Adoption Status: " + item.status;
             }
         });
 
