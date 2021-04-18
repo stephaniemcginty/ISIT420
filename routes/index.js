@@ -9,7 +9,7 @@ const Pets = require("../Pets");
 
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection
-const dbURI = "xxxxxxxx";
+const dbURI = "mongodb+srv://ma:oKk17C2DTKSIrg5A@makcluster.ghm34.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 //
 // 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -82,8 +82,14 @@ router.delete('/DeletePet/:id', function (req, res) {
 router.put('/UpdatePet', function (req, res) {
   Pets.findOneAndUpdate(
     { _id: req.body.id },
-    { completed: true },
-   { new: true },
+    {
+      name: req.body.name,
+      age: req.body.age,
+      breed: req.body.breed,
+      gender: req.body.gender,
+      status: req.body.status
+    },
+    { new: true },
     (err, pet) => {
       if (err) {
         res.status(500).send(err);
